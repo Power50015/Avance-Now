@@ -1,50 +1,82 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+# avance-now Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Security-First Architecture
+Security is not a plugin — it is the Core. Every aspect of the system must be designed with security as the foundational layer, including role-based access control, plugin permission systems, and database-level security enforcement. Plugins operate under strict permission models and cannot access data beyond their explicitly granted permissions.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### II. Plugin-Based Extensibility
+The system follows a plugin-based modular monolith architecture where Core provides essential ERP functionality and plugins extend capabilities. Plugins are guests that must request and receive explicit permission to access system resources. The Hook system (Actions & Filters) enables infinite extensibility without modifying Core code.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### III. Test-First Development (NON-NEGOTIABLE)
+TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced. Nothing ships without tests, and minimum 80% line coverage per module is required before phase completion.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### IV. Explicit Over Implicit
+Explicit is better than magic. All system behaviors should be clear, predictable, and well-documented. Plugin developers must declare their dependencies, permissions, and intentions explicitly through manifests and APIs.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### V. Schema Integrity
+The database schema reflects business reality — no EAV (Entity-Attribute-Value) anti-patterns. Every entity has its own normalized structure. JSONB is used only for descriptive metadata, never for core business data.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+### VI. Observability & Debuggability
+The system prioritizes observability through structured logging, clear error messages, and diagnostic capabilities. Text-based interfaces ensure debuggability, and all significant actions produce audit trails.
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+### VII. Versioning & Stability
+Updates should never break production environments. The system uses semantic versioning (MAJOR.MINOR.BUILD) with clear deprecation policies. Breaking changes require major version increments and explicit migration paths.
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+### VIII. Simplicity & Pragmatism
+Start simple, embrace YAGNI (You Aren't Gonna Need It) principles, and avoid over-engineering. Solutions should address actual problems rather than hypothetical scenarios.
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+## Technology Stack Constraints
+
+### Language & Runtime
+- TypeScript (Node.js 20 LTS) is mandatory for type safety and ecosystem access
+- Strict TypeScript mode enabled (@typescript-eslint/strict)
+
+### Framework & Libraries
+- Fastify HTTP framework for maximum architectural freedom
+- EJS templating engine to enable server-side Hook system
+- DaisyUI + Tailwind CSS for consistent, themeable UI
+- ORM for database abstraction (PostgreSQL, MySQL, SQLite supported)
+
+### Tooling & Quality
+- ESLint + Prettier for code quality and formatting
+- Vitest for TypeScript-native testing
+- Docker + Docker Compose for reproducible environments
+- npm workspaces for monorepo management
+
+### Licensing
+- GPL v3 license ensures distributed plugins remain open source
+- Commercial support/updates permitted but closed-source distribution prohibited
+
+## Development Workflow & Quality Gates
+
+### Code Review Requirements
+All PRs must verify compliance with this Constitution. Complexity must be justified and documented. Code review includes:
+- Security implications assessment
+- Test coverage validation (minimum 80% per module)
+- Dependency and permission declaration verification
+- Documentation completeness check
+
+### Testing Gates
+- Unit tests for all exported functions with mocked dependencies
+- Integration tests for request-response flows against test databases
+- Plugin sandbox testing to verify isolation and permission enforcement
+- Coverage enforcement: 80% minimum line coverage per module
+
+### Deployment Standards
+- Single `docker compose up` command for self-hosting
+- Environment variable configuration (`AVN_*` prefix)
+- Zero-duty deployment strategy with staging approval
+- Immutable infrastructure principles
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+This Constitution supersedes all other development practices and guidelines. Amendments to this Constitution require:
+1. Documentation of proposed changes
+2. Maintainer approval
+3. Migration plan for existing codebases
+4. Version increment in constitution header
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+All developers and contributors are responsible for understanding and adhering to these principles. The Constitution evolves with the project but maintains backward compatibility where possible.
+
+**Version**: 1.0.0 | **Ratified**: 2026-05-22 | **Last Amended**: 2026-05-22
