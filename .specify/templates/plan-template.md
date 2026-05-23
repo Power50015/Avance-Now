@@ -40,7 +40,11 @@
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-[Gates determined based on constitution file]
+- [ ] All database tables use `avn_` prefix
+- [ ] All hooks use `AVN:` prefix
+- [ ] All environment variables use `AVN_` prefix
+- [ ] File and directory names use kebab-case
+- [ ] AVN_NODE_ENV variable properly set for environment
 
 ## Project Structure
 

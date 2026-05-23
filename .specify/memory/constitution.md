@@ -1,50 +1,58 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+# avance-now Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Minimal Core, Maximum Extensibility
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+The core is not a kitchen sink. It provides secure authentication, RBAC, and base commerce functionality. All other features are delivered through a sandboxed, permission-gated plugin system.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### II. Security is not a plugin
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+Authentication, permissions, and audit logging are Core responsibilities. Plugins must explicitly declare their required permissions in a manifest (`plugin.json`) and receive admin approval before installation. Unapproved access is blocked at the database level.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### III. The Schema Reflects Reality
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+No EAV hacks. Every entity has its own normalized schema with typed columns, foreign keys, and indexes. We use universal `avn_meta`, `avn_cache`, and `avn_taxonomies` tables via polymorphic associations for extensible data.
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+### IV. Server-First Rendering
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+Server-rendered HTML (via EJS) is required to enable the Hook system (`hooks.doAction`, `hooks.applyFilter`). Plugins may use any JS framework on the frontend, but must align with DaisyUI CSS.
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+### V. Quality & Test-First
+
+Strict TypeScript must be enforced. Do not use `any` unless absolutely unavoidable. JSDoc is required on every exported function, class, and type. A minimum of 80% test coverage per module using Vitest is mandatory before any phase is marked complete.
+
+## Current Plan & Scope
+
+> Complete step-by-step roadmap for building the avance-now platform.
+
+### Implementation Strategy
+
+The development of avance-now is broken down into **32 distinct, small phases**.
+
+**Rules of Execution:**
+
+1. Each phase produces specific, testable deliverables.
+2. A phase is not complete until all its unit and integration tests pass (minimum 80% coverage).
+3. No phase starts until the previous phase is verified and reviewed by a human.
+4. This ensures steady, high-quality progress without accumulating technical debt.
+
+### Technical Constraints
+
+- **Language**: TypeScript (Node.js 20 LTS)
+- **HTTP Framework**: Fastify
+- **Templating**: EJS
+- **CSS**: DaisyUI + Tailwind CSS
+- **Database**: PostgreSQL (via ORM)
+- **Cache/Queue**: Redis (optional)
+- **Containers**: Docker + Docker Compose
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+- All database tables MUST start with `avn_`.
+- All hooks MUST start with `AVN:`.
+- All environment variables MUST start with `AVN_`.
+- File and directory names MUST use `kebab-case`.
+- The `AVN_NODE_ENV` variable dictates the execution context (`development`, `test`, `production`).
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.0.0 | **Ratified**: 2026-05-22 | **Last Amended**: 2026-05-22
