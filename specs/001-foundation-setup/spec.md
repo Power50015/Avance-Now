@@ -8,6 +8,15 @@
 
 **Input**: User description: "@AGENTS.md Phase 0 — Foundation Setup"
 
+## Clarifications
+
+### Session 2026-05-22
+- Q: What is explicitly OUT OF SCOPE for Phase 0 Foundation Setup? → A: None - include everything mentioned in AGENTS.md Phase 0
+- Q: What specific qualities make an error message 'clear' when reporting missing server configuration? → A: Provides example values or format for each missing config
+- Q: How should the specification handle the balance between being prescriptive enough to ensure consistency versus flexible enough to accommodate different developer preferences? → A: Prescribe specific tools but allow equivalent alternatives
+- Q: What level of detail should be included in the 'basic README' mentioned in Phase 0a Repository & Tooling Setup? → A: Comprehensive: Plus API overview, architecture diagrams, and FAQ
+- Q: What specifications define a 'standard development machine' for measuring the 5-minute startup time success criterion? → A: Current mid-range laptop (8GB RAM, i5/equivalent CPU, SSD)
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - Project Repository and Developer Tooling (Priority: P1)
@@ -69,12 +78,12 @@ Operations and development teams need a minimal running application so they can 
 
 ### Functional Requirements
 
-- **FR-001**: Developers MUST be able to clone the repository and have a complete, standardized project structure ready for development.
-- **FR-002**: The project MUST enforce consistent code formatting automatically before commits are accepted.
+- **FR-001**: Developers MUST be able to clone the repository and have a complete, standardized project structure ready for development, including a comprehensive README with project overview, setup instructions, API overview, architecture diagrams, and FAQ.
+- **FR-002**: The project MUST enforce consistent code formatting automatically before commits are accepted, specifying required tools (e.g., Prettier, ESLint) but allowing equivalent alternatives that produce the same output.
 - **FR-003**: Developers MUST be able to start the entire development stack (application, database, web server) with a single command.
 - **FR-004**: The development environment MUST produce identical behavior regardless of the host operating system.
 - **FR-005**: The application server MUST provide a health check endpoint that reports whether the server is operational and ready to handle requests.
-- **FR-006**: The server MUST validate its own configuration at startup and refuse to start with a clear error message if required configuration is missing.
+- **FR-006**: The server MUST validate its own configuration at startup and refuse to start with an error message that lists each missing configuration value and provides an example of the expected format for each missing item.
 - **FR-007**: Malformed or invalid requests MUST be handled gracefully with user-friendly error responses without crashing the server.
 - **FR-008**: The database instance in the development environment MUST initialize with the required schema on first startup.
 - **FR-009**: Developers MUST be able to run the test suite against an isolated database that does not affect other environments.
@@ -89,7 +98,7 @@ Operations and development teams need a minimal running application so they can 
 ### Measurable Outcomes
 
 - **SC-001**: A new developer can go from cloning the repository to having a running development environment in under 30 minutes, following a single documented setup process.
-- **SC-002**: The startup command produces a fully operational stack (all services healthy) within 5 minutes on a standard development machine.
+- **SC-002**: The startup command produces a fully operational stack (all services healthy) within 5 minutes on a current mid-range laptop (8GB RAM, i5/equivalent CPU, SSD).
 - **SC-003**: 100% of code formatting and linting rules execute consistently and identically across all developer machines.
 - **SC-004**: The health check endpoint responds within 500ms on a development machine, confirming server readiness.
 - **SC-005**: Configuration validation catches all missing required settings and produces distinct error messages for each missing configuration value.

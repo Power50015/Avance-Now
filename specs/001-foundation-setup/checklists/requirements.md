@@ -31,4 +31,4 @@
 
 ## Notes
 
-- All items pass validation. No [NEEDS CLARIFICATION] markers to resolve. Spec is ready for `/speckit.plan`.
+- All items pass validation. Five clarifications added and resolved: out-of-scope definition, error message clarity, tool flexibility approach, README detail level, and standard development machine specification. Spec is ready for `/speckit.plan`.
