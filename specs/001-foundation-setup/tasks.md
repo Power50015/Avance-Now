@@ -1,6 +1,5 @@
 ---
-
-description: "Task list for Foundation Setup (Phase 0)"
+description: 'Task list for Foundation Setup (Phase 0)'
 ---
 
 # Tasks: Foundation Setup
@@ -30,9 +29,9 @@ description: "Task list for Foundation Setup (Phase 0)"
 
 **Purpose**: Project initialization and basic structure
 
-- [ ] T001 Create project directory structure per plan.md (src/models/, src/config/, src/components/, src/services/, src/api/, src/router/, src/views/, plugins/, tests/unit/, tests/integration/, tests/contract/)
-- [ ] T002 Initialize npm project with package.json including scripts: build, dev, start, test, lint, format
-- [ ] T003 [P] Create .gitignore for Node.js project (node_modules, dist, .env, coverage)
+- [x] T001 Create project directory structure per plan.md (src/models/, src/config/, src/components/, src/services/, src/api/, src/router/, src/views/, plugins/, tests/unit/, tests/integration/, tests/contract/)
+- [x] T002 Initialize npm project with package.json including scripts: build, dev, start, test, lint, format
+- [x] T003 [P] Create .gitignore for Node.js project (node_modules, dist, .env, coverage)
 
 ---
 
@@ -42,10 +41,10 @@ description: "Task list for Foundation Setup (Phase 0)"
 
 **CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T004 [P] Configure TypeScript with strict mode in tsconfig.json (target ES2022, strict true, include src/)
-- [ ] T005 [P] Configure ESLint strict in eslint.config.js with TypeScript and Prettier integration
-- [ ] T006 [P] Configure Prettier in .prettierrc (consistent formatting rules)
-- [ ] T007 Set up Husky with pre-commit hooks in .husky/pre-commit (run lint-staged on commit)
+- [x] T004 [P] Configure TypeScript with strict mode in tsconfig.json (target ES2022, strict true, include src/)
+- [x] T005 [P] Configure ESLint strict in eslint.config.js with TypeScript and Prettier integration
+- [x] T006 [P] Configure Prettier in .prettierrc (consistent formatting rules)
+- [x] T007 Set up Husky with pre-commit hooks in .husky/pre-commit (run lint-staged on commit)
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
@@ -59,7 +58,7 @@ description: "Task list for Foundation Setup (Phase 0)"
 
 ### Implementation for User Story 1
 
-- [ ] T008 [US1] Create comprehensive README.md with project overview, setup instructions, API overview, architecture diagrams, and FAQ
+- [x] T008 [US1] Create comprehensive README.md with project overview, setup instructions, API overview, architecture diagrams, and FAQ
 
 **Checkpoint**: At this point, User Story 1 should be fully functional and testable independently. A developer can clone, install, and have consistent tooling.
 
@@ -73,10 +72,10 @@ description: "Task list for Foundation Setup (Phase 0)"
 
 ### Implementation for User Story 2
 
-- [ ] T009 [P] [US2] Create Dockerfile for the application (Node.js 20 LTS, TypeScript build)
-- [ ] T010 [P] [US2] Create docker-compose.yml with application (Fastify), PostgreSQL, and Nginx services
-- [ ] T011 [US2] Create Nginx development configuration in .docker/nginx/default.conf (reverse proxy to Fastify)
-- [ ] T012 [US2] Create .env.example with documented environment variables for all services
+- [x] T009 [P] [US2] Create Dockerfile for the application (Node.js 20 LTS, TypeScript build)
+- [x] T010 [P] [US2] Create docker-compose.yml with application (Fastify), PostgreSQL, and Nginx services
+- [x] T011 [US2] Create Nginx development configuration in .docker/nginx/default.conf (reverse proxy to Fastify)
+- [x] T012 [US2] Create .env.example with documented environment variables for all services
 
 **Checkpoint**: At this point, User Story 2 should be fully functional. Developer can run `npm run dev` and have the full stack available.
 
@@ -90,13 +89,13 @@ description: "Task list for Foundation Setup (Phase 0)"
 
 ### Implementation for User Story 3
 
-- [ ] T013 [P] [US3] Implement configuration validation in src/config/index.ts (load and validate AVN_* env vars, fail with clear messages showing expected format)
-- [ ] T014 [P] [US3] Implement error handling middleware in src/middleware/error-handler.ts (catch all errors, return user-friendly JSON responses)
-- [ ] T015 [P] [US3] Implement health check endpoint at GET /health in src/api/health.ts (return JSON status indicating server is operational)
-- [ ] T016 [P] [US3] Implement API index handler at GET /api in src/api/index.ts (return basic welcome/info JSON)
-- [ ] T017 [P] [US3] Set up EJS view engine with @fastify/view and create front page template in src/views/index.ejs (DaisyUI-styled landing page)
-- [ ] T018 [US3] Create Fastify server entry point in src/server.ts that integrates config validation, error handler, all routes, and view engine
-- [ ] T019 [US3] Add graceful shutdown handling in src/server.ts (SIGTERM/SIGINT cleanup, close connections)
+- [x] T013 [P] [US3] Implement configuration validation in src/config/index.ts (load and validate AVN\_\* env vars, fail with clear messages showing expected format)
+- [x] T014 [P] [US3] Implement error handling middleware in src/middleware/error-handler.ts (catch all errors, return user-friendly JSON responses)
+- [x] T015 [P] [US3] Implement health check endpoint at GET /health in src/api/health.ts (return JSON status indicating server is operational)
+- [x] T016 [P] [US3] Implement API index handler at GET /api in src/api/index.ts (return basic welcome/info JSON)
+- [x] T017 [P] [US3] Set up EJS view engine with @fastify/view and create front page template in src/views/index.ejs (DaisyUI-styled landing page)
+- [x] T018 [US3] Create Fastify server entry point in src/server.ts that integrates config validation, error handler, all routes, and view engine
+- [x] T019 [US3] Add graceful shutdown handling in src/server.ts (SIGTERM/SIGINT cleanup, close connections)
 
 ---
 
@@ -104,8 +103,8 @@ description: "Task list for Foundation Setup (Phase 0)"
 
 **Purpose**: Improvements that affect multiple user stories
 
-- [ ] T020 [P] Verify quickstart.md steps are valid by running through the full setup flow
-- [ ] T021 Final documentation review across all created files for consistency
+- [x] T020 [P] Verify quickstart.md steps are valid by running through the full setup flow
+- [x] T021 Final documentation review across all created files for consistency
 
 ---
 
@@ -153,6 +152,7 @@ Task: "Set up EJS view engine and front page in src/views/index.ejs"
 ```
 
 Then once all three complete:
+
 ```bash
 Task: "Create Fastify server entry point in src/server.ts"
 Task: "Add graceful shutdown handling in src/server.ts"
