@@ -10,8 +10,9 @@ FROM node:20-alpine AS runner
 WORKDIR /app
 RUN addgroup --system app && adduser --system --ingroup app app
 COPY package.json package-lock.json ./
-RUN npm ci --omit=dev
+RUN npm ci --omit=dev --ignore-scripts
 COPY --from=builder /app/dist dist/
+COPY src/views dist/views/
 USER app
 EXPOSE 3000
 ENV NODE_ENV=production
