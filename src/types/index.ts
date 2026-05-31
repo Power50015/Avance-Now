@@ -1,8 +1,17 @@
+/**
+ * Valid runtime environment identifiers for the avance-now platform.
+ * Used to constrain `AVN_NODE_ENV` to known values at the type level.
+ */
+export type NodeEnv = 'development' | 'production' | 'test';
+
+/**
+ * Application-wide configuration derived from validated environment variables.
+ * Constructed once at startup by {@link loadConfig} and decorated onto the
+ * Fastify instance as `app.config`.
+ */
 export interface AppConfig {
-  nodeEnv: string;
-  isDev: boolean;
-  isProd: boolean;
-  isTest: boolean;
+  nodeEnv: NodeEnv;
+  version: string;
   port: number;
   host: string;
   dbHost: string;
@@ -22,6 +31,10 @@ export interface AppConfig {
   keepAliveTimeout: number;
 }
 
+/**
+ * Response payload for the `/health` endpoint.
+ * Reports basic process telemetry for monitoring and orchestration tools.
+ */
 export interface HealthStatus {
   status: string;
   timestamp: string;
@@ -34,6 +47,10 @@ export interface HealthStatus {
   version: string;
 }
 
+/**
+ * Response payload for the `/api` root index endpoint.
+ * Provides platform metadata and a documentation link.
+ */
 export interface ApiInfo {
   name: string;
   version: string;
@@ -42,6 +59,10 @@ export interface ApiInfo {
   env: string;
 }
 
+/**
+ * Standardised error response envelope sent to clients on any non-2xx reply.
+ * All error handlers must conform to this shape.
+ */
 export interface ErrorResponse {
   error: string;
   message: string;

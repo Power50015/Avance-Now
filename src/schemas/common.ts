@@ -1,3 +1,4 @@
+/** Reusable JSON Schema for pagination query parameters. */
 export const paginationQuerySchema = {
   type: 'object',
   properties: {
@@ -6,6 +7,7 @@ export const paginationQuerySchema = {
   },
 };
 
+/** Reusable JSON Schema for UUID-style `:id` route parameters. */
 export const idParamSchema = {
   type: 'object',
   properties: {
@@ -14,6 +16,7 @@ export const idParamSchema = {
   required: ['id'],
 };
 
+/** Reusable JSON Schema for the standard error response envelope. */
 export const errorResponseSchema = {
   type: 'object',
   properties: {

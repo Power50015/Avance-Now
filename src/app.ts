@@ -1,5 +1,6 @@
-import Fastify from 'fastify';
+import Fastify, { FastifyInstance } from 'fastify';
 import fastifyFormbody from '@fastify/formbody';
+import fastifySensible from '@fastify/sensible';
 import { registerSecurityPlugins } from './plugins/security.js';
 import { registerViewEngine } from './plugins/views.js';
 import { registerHealthRoutes } from './routes/health.js';
@@ -16,12 +17,28 @@ declare module 'fastify' {
   }
 }
 
-export async function buildApp(config: AppConfig): Promise<ReturnType<typeof Fastify>> {
-  const logger = createLogger(config.logLevel);
+/**
+ * Constructs and configures the Fastify application instance.
+ *
+ * Responsibilities:
+ * - Decorates `app.config` with the validated {@link AppConfig}.
+ * - Registers security plugins (Helmet, CORS, rate limiting).
+ * - Registers the EJS view engine when `config.enableViews` is `true`.
+ * - Mounts all route groups (health, API index, and optionally root).
+ * - Exposes a `/__debug` endpoint in development when `config.enableDebug`
+ *   is enabled.
+ *
+ * The returned instance is ready to call `.listen()` but is not yet listening.
+ *
+ * @param config - Validated application configuration.
+ * @returns A fully configured Fastify instance.
+ */
+export async function buildApp(config: AppConfig): Promise<FastifyInstance> {
+  const logger = createLogger(config.logLevel, config.nodeEnv);
 
   const app = Fastify({
     logger,
-    genReqId: () => crypto.randomUUID(),
+    genReqId: (req) => (req.headers['x-request-id'] as string | undefined) || crypto.randomUUID(),
     keepAliveTimeout: config.keepAliveTimeout,
     requestTimeout: 30000,
     bodyLimit: 1048576,
@@ -36,15 +53,16 @@ export async function buildApp(config: AppConfig): Promise<ReturnType<typeof Fas
 
   await registerSecurityPlugins(app, config.corsOrigin, config.rateLimitMax);
 
+  await app.register(fastifySensible);
   await app.register(fastifyFormbody);
 
   if (config.enableViews) {
     await registerViewEngine(app);
+    registerRootRoutes(app);
   }
 
   registerHealthRoutes(app);
   registerApiIndexRoutes(app);
-  registerRootRoutes(app);
 
   if (config.enableDebug && isDev(config.nodeEnv)) {
     app.get('/__debug', async () => ({

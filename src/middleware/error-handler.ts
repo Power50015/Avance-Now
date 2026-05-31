@@ -1,6 +1,18 @@
 import { FastifyError, FastifyReply, FastifyRequest } from 'fastify';
 import { ErrorResponse } from '../types/index.js';
 
+/**
+ * Global Fastify error handler.
+ *
+ * - Logs 5xx errors at `error` level and 4xx errors at `warn` level.
+ * - Never leaks internal error details to the client for 5xx responses.
+ * - Converts Fastify validation errors into a structured `VALIDATION_ERROR`
+ *   response with per-field details.
+ *
+ * @param error - The error thrown by a route handler or hook.
+ * @param request - The incoming Fastify request.
+ * @param reply - The Fastify reply used to send the error response.
+ */
 export function errorHandler(
   error: FastifyError & {
     statusCode?: number;
@@ -21,7 +33,7 @@ export function errorHandler(
 
   const body: ErrorResponse = {
     error: statusCode >= 500 ? 'Internal Server Error' : error.message,
-    message: error.message,
+    message: statusCode >= 500 ? 'An unexpected error occurred' : error.message,
     code: error.code || (statusCode >= 500 ? 'INTERNAL_ERROR' : 'REQUEST_ERROR'),
     statusCode,
     requestId,
@@ -37,12 +49,19 @@ export function errorHandler(
   reply.status(statusCode).send(body);
 }
 
-export function notFoundHandler(_request: FastifyRequest, reply: FastifyReply): void {
+/**
+ * Handler for requests that do not match any registered route.
+ * Returns a structured 404 response with the attempted method and URL.
+ *
+ * @param request - The incoming Fastify request.
+ * @param reply - The Fastify reply used to send the 404 response.
+ */
+export function notFoundHandler(request: FastifyRequest, reply: FastifyReply): void {
   reply.status(404).send({
     error: 'Not Found',
-    message: `Route ${_request.method} ${_request.url} not found`,
+    message: `Route ${request.method} ${request.url} not found`,
     code: 'NOT_FOUND',
     statusCode: 404,
-    requestId: _request.id,
+    requestId: request.id,
   } satisfies ErrorResponse);
 }

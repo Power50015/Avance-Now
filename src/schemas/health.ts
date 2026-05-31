@@ -1,3 +1,4 @@
+/** JSON Schema for the `GET /health` 200 response body. */
 export const healthResponseSchema = {
   response: {
     200: {
@@ -20,6 +21,7 @@ export const healthResponseSchema = {
   },
 };
 
+/** Route-level schema options for the health check endpoint. */
 export const healthRouteSchema = {
   schema: {
     description: 'Health check endpoint for monitoring and orchestration tools',

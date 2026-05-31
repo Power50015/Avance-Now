@@ -1,5 +1,14 @@
 import { HealthStatus } from '../types/index.js';
 
+/**
+ * Builds a {@link HealthStatus} snapshot of the current process.
+ *
+ * Memory values are rounded to whole megabytes for readability in
+ * dashboards and alerting systems.
+ *
+ * @param version - Application version string (from `AppConfig.version`).
+ * @returns A health status object suitable for JSON serialisation.
+ */
 export function getHealthStatus(version: string): HealthStatus {
   const memoryUsage = process.memoryUsage();
   return {

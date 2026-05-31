@@ -1,6 +1,18 @@
 import { loadConfig } from './config/index.js';
 import { buildApp } from './app.js';
 
+/**
+ * Boots the Fastify server and installs OS signal handlers for
+ * graceful shutdown.
+ *
+ * Shutdown behaviour:
+ * - On SIGTERM / SIGINT / SIGQUIT: drains in-flight requests via
+ *   `app.close()` with a 10-second hard timeout.
+ * - On uncaught exceptions: logs and exits immediately (process is
+ *   considered corrupt).
+ * - On unhandled rejections: logs and initiates graceful shutdown
+ *   (Node 20+ would throw by default; we make this explicit).
+ */
 async function start(): Promise<void> {
   const config = loadConfig();
   const app = await buildApp(config);
@@ -38,7 +50,8 @@ async function start(): Promise<void> {
   });
 
   process.on('unhandledRejection', (reason) => {
-    app.log.error({ err: reason }, 'Unhandled rejection');
+    app.log.error({ err: reason }, 'Unhandled rejection — initiating shutdown');
+    shutdown('unhandledRejection');
   });
 }
 

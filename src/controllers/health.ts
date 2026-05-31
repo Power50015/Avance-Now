@@ -1,10 +1,20 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { getHealthStatus } from '../services/health.js';
 
+/**
+ * Handler for `GET /health`.
+ *
+ * Returns process-level telemetry (uptime, memory, version) for use by
+ * monitoring tools and orchestrators. The version is sourced from the
+ * decorated `app.config` for consistency.
+ *
+ * @param request - The incoming Fastify request.
+ * @param reply - The Fastify reply.
+ */
 export async function healthCheckHandler(
-  _request: FastifyRequest,
+  request: FastifyRequest,
   reply: FastifyReply,
 ): Promise<void> {
-  const version = process.env.npm_package_version || '0.1.0';
-  reply.send(getHealthStatus(version));
+  const config = request.server.config;
+  reply.send(getHealthStatus(config.version));
 }
